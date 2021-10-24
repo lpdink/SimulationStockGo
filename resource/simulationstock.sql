@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for alive_orders
--- ----------------------------
+-- ---------------------------
 DROP TABLE IF EXISTS `alive_orders`;
 CREATE TABLE `alive_orders`  (
   `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
