@@ -53,8 +53,16 @@ go mod init example.com/m
 ```
 - 下载依赖
 ```go
+//gin
 go get -u github.com/gin-gonic/gin
+//gorm
+go get -u gorm.io/gorm 
+go get -u gorm.io/driver/sqlite
 ```
-TODO：编写gorm的依赖配置方式；
+- 初始化项目MySQL表
+```shell
+./tools/loadMySql.exe
+# 根据命令行提示，输入信息即可。
+```
 
 TODO：编写在Linux下，go-python3的依赖配置方式
