@@ -2,7 +2,7 @@ package domain
 
 import "time"
 
-type UserHoldings struct {
+type UserHolding struct {
 	UserID           string    `gorm:"column:user_id;primary_key"`
 	StockName        string    `gorm:"column:stock_name;NOT NULL"`
 	StockAmount      int       `gorm:"column:stock_amount"`

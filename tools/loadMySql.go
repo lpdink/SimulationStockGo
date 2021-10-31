@@ -1,10 +1,10 @@
 package main
 
 import (
+	"example.com/m/src/domain"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"example.com/m/src/domain"
 )
 
 func main() {
@@ -23,10 +23,10 @@ func main() {
 	}
 
 	// 迁移 schema
-	db.AutoMigrate(&domain.AliveOrders{})
+	db.AutoMigrate(&domain.AliveOrder{})
 	db.AutoMigrate(&domain.AllStock{})
 	db.AutoMigrate(&domain.StockInformation{})
-	db.AutoMigrate(&domain.UserHoldings{})
+	db.AutoMigrate(&domain.UserHolding{})
 	db.AutoMigrate(&domain.UserInformation{})
 	fmt.Println("数据库表迁移成功，输入任意键结束")
 	fmt.Scanln()

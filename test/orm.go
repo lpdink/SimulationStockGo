@@ -1,8 +1,10 @@
 package main
 
 import (
+	"example.com/m/src/domain"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
 )
 
 type Product struct {
@@ -18,12 +20,18 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
-
+	var user = domain.UserInformation{}
+	var not_exist = db.Where("user_id=?","test1").First(&user).Error!=nil
+	if not_exist{
+		log.Println("record not find")
+	}
+	log.Println(user)
+	log.Println(not_exist)
 	// 迁移 schema
-	db.AutoMigrate(&Product{})
+	//db.AutoMigrate(&Product{})
 
 	// Create
-	db.Create(&Product{Code: "D42", Price: 100})
+	//db.Create(&Product{Code: "D42", Price: 100})
 
 	/*
 	// Read

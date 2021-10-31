@@ -27,16 +27,13 @@
 - 完成postController.go中的三个函数
 - 参考[SimulationStockBasedOnQQBot](https://github.com/lpdink/SimulationStockBasedOnQQBot) 
   中service层的代码，实现本工程service层的业务逻辑。
-    - Notes: 由于计划通过python-tushare实现数据的获取，有关数据获取的业务，可以暂缓实现，或调用一个未实现的函数，留下接口即可。
-- 查询gorm资料，结合simulationstock.sql，实现domain实体类。
+    - Notes: tushare是python的，在go中需要手写HTTP请求去调用，参考https://tushare.pro/document/1?doc_id=130。    
 - 查询gorm资料，在实现domain实体类后，实现dao层增删改查函数。
 ## DONE
 - 完成了项目基本框架的建立
 ## 依赖说明
 - [goLand: IDE环境](https://www.jetbrains.com/go/) go-sdk==1.16.2
 - [gin: web框架](https://github.com/gin-gonic/gin)
-- [go-python3: go调用python3](https://github.com/DataDog/go-python3)
-    - Notes: go-python3的环境在windows下很难配置，不建议进行尝试。考虑在linux平台上完成相关模块的实现和测试。
 - [gorm: orm框架](https://gorm.io/zh_CN/docs/index.html)
 ## 依赖配置
 - 下载goLand社区版,配置好go环境
@@ -64,5 +61,3 @@ go get -u gorm.io/driver/sqlite
 ./tools/loadMySql.exe
 # 根据命令行提示，输入信息即可。
 ```
-
-TODO：编写在Linux下，go-python3的依赖配置方式

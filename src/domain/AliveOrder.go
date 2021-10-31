@@ -2,7 +2,7 @@ package domain
 
 import "time"
 
-type AliveOrders struct {
+type AliveOrder struct {
 	UserID           string    `gorm:"column:user_id;primary_key"`
 	AliveOrderIndex  int       `gorm:"column:alive_order_index;NOT NULL"`
 	AliveOrderTime   time.Time `gorm:"column:alive_order_time"`

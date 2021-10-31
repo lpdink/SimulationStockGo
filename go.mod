@@ -3,6 +3,7 @@ module example.com/m
 go 1.16
 
 require (
+	github.com/DataDog/go-python3 v0.0.0-20211021100410-50e4a2b1e5c5 // indirect
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
