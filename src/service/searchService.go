@@ -8,10 +8,11 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"io/ioutil"
+	"log"
 	"net/http"
-	"strconv"
 )
-var token="7050090aab373e93c870c9533cba7bc9d396255960ee5d8b52412eb2"
+//var token="7050090aab373e93c870c9533cba7bc9d396255960ee5d8b52412eb2"
+var token="d2144df3d2c4f703454e331d9c95c0dc8685101ca04795d337cd5de1"
 const url = "http://api.tushare.pro"
 
 
@@ -47,21 +48,25 @@ func callAPI(apiName, fields string,
 }
 
 
-func Login(userId string, password string)(string, int){
+func Login(userId string, password string)(int, float64,[] domain.UserHolding){
 	var user = domain.UserInformation{}
+	var user_holdings []domain.UserHolding
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return "连接数据库失败",0
+		return -1,-1,user_holdings
 	}
 	var is_exist = db.Where("user_id=?",userId).First(&user).Error==nil
 	if is_exist{
 		if user.PassWord==password{
-			return "登录成功",1
+			//查询剩余资产和持仓情况
+			var funds=user.FreeMoneyAmount
+			db.Where("user_id=?", userId).Find(&user_holdings)
+			return 1, funds, user_holdings //登录成功
 		}else {
-			return "密码不正确",0
+			return 0,-1,user_holdings //密码输入错误
 		}
 	} else {
-		return "用户不存在",0
+		return -1, -1,user_holdings//用户不存在
 	}
 }
 
@@ -89,20 +94,32 @@ func DrawK(stockid string, startdate string,enddate string)[]map[string]interfac
 	var result = callAPI("daily","",params)
 	var msg TushareMsg
 	_ = json.Unmarshal(result, &msg)
+	log.Println(msg)
 	var i int
-	begin,_:=strconv.Atoi(startdate)
-	end, _:=strconv.Atoi(enddate)
+	//begin,_:=strconv.Atoi(startdate)
+	//end, _:=strconv.Atoi(enddate)
 
 	var rst []map[string]interface{}
-	for i=0;i<end-begin;i++{
+	for i=0;i<len(msg.Data.Items);i++{
 		m:=make(map[string]interface{})
 		m["open"]=msg.Data.Items[i][2]
 		m["close"]=msg.Data.Items[i][5]
 		m["high"]=msg.Data.Items[i][3]
 		m["low"]=msg.Data.Items[i][4]
 		m["volume"]=msg.Data.Items[i][10]
+		m["trade_data"]=msg.Data.Items[i][1]
 		rst = append(rst,m)
 		//关于时间戳，建议前端用js去获取
 	}
 	return rst
+}
+
+func SearchHoldings(user_id string)([]domain.UserHolding)  {
+	var user_holdings []domain.UserHolding
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return user_holdings
+	}
+	db.Where("user_id=?",user_id).Find(&user_holdings)
+	return user_holdings
 }

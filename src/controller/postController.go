@@ -3,6 +3,7 @@ package controller
 import (
 	"example.com/m/src/service"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 /*
 post-controller要做的事情很简单，从前端取出数据，判断一下数据是否存在：
@@ -45,29 +46,80 @@ func Register(c *gin.Context){
 		return
 	}
 	// call service function do something
-	message:=service.Register(id,username,password)
+	message, _ :=service.Register(id,username,password)
 
 	//return success and info to clienter
 	c.JSON(200,gin.H{
-		"message":message,
+		"data":message,
 		"id":id,
 		"username":username,
 	})
 
 }
 
-//TODO 参考func Register，完成以下三个函数
-//从前端提取的参数:
-//参考https://github.com/lpdink/SimulationStockBasedOnQQBot/blob/master/controller/awesome/plugins/QQBotPlugins.py
-func AddSelfStock(c *gin.Context)  {
-	
+func Login(c *gin.Context){
+
+	//getData
+	id, idOk :=c.GetPostForm("id")
+	password, passwordOk :=c.GetPostForm("password")
+	//checkIsExist
+	if !idOk || !passwordOk {
+		c.JSON(400,gin.H{
+			"message":"value not found",
+		})
+		return
+	}
+	// call service function do something
+	message, funds, holdings :=service.Login(id,password)
+
+	//return success and info to clienter
+	c.JSON(200,gin.H{
+		"data":message,
+		"id":id,
+		"funds":funds,
+		"asset":holdings,
+	})
+
+}
+
+func DrawK(c* gin.Context)  {
+	//getData
+	stock_id, _ :=c.GetPostForm("id")
+	startdata, _ :=c.GetPostForm("start")
+	enddata, _:=c.GetPostForm("end")
+	rst:=service.DrawK(stock_id,startdata,enddata)
+	c.JSON(200,gin.H{
+		"share":rst,
+	})
 }
 
 func BuyStock(c *gin.Context)  {
-	
+	user_id,_:=c.GetPostForm("id")
+	stock_id,_:=c.GetPostForm("stockvalue")
+	stock_name,_:=c.GetPostForm("stockname")
+	buy_quantity,_:=c.GetPostForm("buy_quantity")
+	buy_quantity_i, _ :=strconv.Atoi(buy_quantity)
+	data:=service.BuyStock(stock_id,stock_name,user_id,buy_quantity_i)
+	c.JSON(200,gin.H{
+		"data":data,
+	})
 }
 
 func SellStock(c *gin.Context)  {
-
+	user_id,_:=c.GetPostForm("id")
+	stock_id,_:=c.GetPostForm("stockvalue")
+	stock_num,_:=c.GetPostForm("sell_quantity")
+	stock_num_i,_:=strconv.Atoi(stock_num)
+	data:=service.SellStock(stock_id,user_id,stock_num_i)
+	c.JSON(200,gin.H{
+		"data":data,
+	})
 }
 
+func SearchHoldings(c *gin.Context){
+	user_id,_:=c.GetPostForm("id")
+	res:=service.SearchHoldings(user_id)
+	c.JSON(200,gin.H{
+		"res":res,
+	})
+}

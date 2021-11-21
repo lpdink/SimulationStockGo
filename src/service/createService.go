@@ -30,7 +30,7 @@ func Register(userid string, username string, password string) (string,int) {
 			TotalMoneyAmount: 500000,
 		}
 		db.Create(new_user)
-		return "注册成功",1
+		return "ok",1
 	}
 }
 

@@ -3,7 +3,6 @@ package controller
 //get 请求的参数提取，可以参考：https://blog.csdn.net/qq_41004932/article/details/119486982
 
 import (
-	"example.com/m/src/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,7 +11,7 @@ func Ping(c *gin.Context) {
 		"message": "ping success!",
 	})
 }
-
+/*
 func SearchStock(c *gin.Context) {
 	stockName := c.Param("stockName")
 	if stockName == "" {
@@ -68,3 +67,5 @@ func SearchUserInformations(c *gin.Context) {
 func SearchK(c *gin.Context) {
 
 }
+
+*/
