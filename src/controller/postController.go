@@ -3,6 +3,7 @@ package controller
 import (
 	"example.com/m/src/service"
 	"github.com/gin-gonic/gin"
+	"log"
 	"strconv"
 )
 /*
@@ -33,7 +34,7 @@ if !ok {
 */
 
 func Register(c *gin.Context){
-
+	log.Println(c)
 	//getData
 	id, idOk :=c.GetPostForm("id")
 	username, usernameOk :=c.GetPostForm("username")
