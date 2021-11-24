@@ -1,10 +1,12 @@
 package domain
 
-import "time"
+import (
+	"time"
+)
 
 type UserHolding struct {
-	ID               string    `gorm:"column:id;primary_key"`
-	UserID           string    `gorm:"column:user_id"`
+	StockID               string    `gorm:"column:stock_id;primary_key"`
+	UserID           string    `gorm:"column:user_id;primary_key"`
 	StockName        string    `gorm:"column:stock_name;NOT NULL"`
 	StockAmount      int       `gorm:"column:stock_amount"`
 	BoughtPrice      string    `gorm:"column:bought_price"`

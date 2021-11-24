@@ -42,7 +42,7 @@ func BuyStock(stockid string, stock_name string, userid string, stocknum int)(in
 			log.Println("enter is exist!!!!!")
 		} else{
 			db.Create(domain.UserHolding{
-				ID:               stockid,
+				StockID:          stockid,
 				UserID:           userid,
 				StockName:        stock_name,
 				StockAmount:      int(stocknum),
