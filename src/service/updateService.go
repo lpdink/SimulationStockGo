@@ -33,7 +33,7 @@ func BuyStock(stockid string, stock_name string, userid string, stocknum int)(in
 		return -1
 	} else {
 		var holding =domain.UserHolding{}
-		tx:=db.Where("id=?",stockid)
+		tx:=db.Where("stock_id=?",stockid)
 		tx=tx.Where("user_id=?",userid)
 		var is_exist =tx.First(&holding).Error==nil
 		if is_exist{
