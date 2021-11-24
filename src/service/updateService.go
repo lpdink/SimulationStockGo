@@ -66,7 +66,7 @@ func SellStock(stockid string, userid string, stocknum int) int {
 	price:=getPrice(stockid)
 	total_price:=price*float64(stocknum)
 	var holding =domain.UserHolding{}
-	tx:=db.Where("id=?",stockid)
+	tx:=db.Where("stock_id=?",stockid)
 	tx=tx.Where("user_id=?",userid)
 	var user = domain.UserInformation{}
 	db.Where("user_id=?",userid).First(&user)
